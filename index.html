@@ -442,20 +442,20 @@
                 `📝 <b>Описание задачи:</b>\n${formData.description}\n\n` +
                 `⏰ ${new Date().toLocaleString('ru-RU', {timeZone: 'Europe/Moscow'})} МСК`;
 
-            // Send to Telegram Bot
-            const BOT_TOKEN = '8078652054:AAFwIATYEuRe-x4v9bP9AHwgn69Cua3nk3o';
-            const ADMIN_CHAT_ID = '111748497';
-
+            // Send to backend endpoint (безопасно - токен на сервере)
             try {
-                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                const response = await fetch('http://158.160.191.160:8083/api/b2b-lead', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        chat_id: ADMIN_CHAT_ID,
-                        text: message,
-                        parse_mode: 'HTML'
+                        name: formData.name,
+                        email: formData.email,
+                        company: formData.company,
+                        phone: formData.phone,
+                        segment: segmentRu,
+                        description: formData.description
                     })
                 });
 
